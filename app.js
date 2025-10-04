@@ -7,8 +7,10 @@ const isSaleChexbox = document.getElementById("isSale");
 const saleInput = document.getElementById("sale");
 const cardsListEL = document.getElementById("cardsList");
 const saleBox = document.querySelector(".saleBox");
+const submit = document.getElementById("submit");
 
 let cards = [];
+let uptadeId = null;
 
 window.addEventListener("DOMContentLoaded", () => {
   loadPruduct();
@@ -16,7 +18,11 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  addCard();
+  if (uptadeId) {
+    editCard();
+  } else {
+    addCard();
+  }
 });
 function addCard() {
   if (nameInput.value.trim() === "") {
@@ -88,94 +94,130 @@ isSaleChexbox.addEventListener("change", () => {
 });
 
 function deleteBtn(id) {
-  console.log(id);
-
   cards = cards.filter((del) => del.id !== id);
-
+  savePruduct();
   renderProducts();
 }
+function editBtn(id) {
+  const card = cards.find((edit) => edit.id == id);
+  nameInput.value = card.name;
+  priceInput.value = card.price;
+  urlInput.value = card.url;
+  countInput.value = card.count;
+  saleInput.value = card.sale;
+  isSaleChexbox.checked = card.isSale;
+  saleInput.value = card.sale * 100;
+  submit.innerHTML = "O'gartirish";
+  uptadeId = id;
+}
+function editCard() {
+  cards = cards.map((c) =>
+    c.id === uptadeId
+      ? {
+          ...c,
+          name: nameInput.value,
+          url: urlInput.value,
+          price: Number(priceInput.value),
+          count: Number(countInput.value),
+          isSale: isSaleChexbox.checked,
+          sale: Number(saleInput.value) / 100,
+        }
+      : c
+  );
+
+  renderProducts();
+  resetForm();
+}
+
 function resetForm() {
   form.reset();
-  nameInput.value = "";
-  priceInput.value = "";
-  urlInput.value = "";
-  countInput.value = "";
-  saleInput.value = "";
-  isSaleChexbox.value = "";
-  nameInput.value = "";
+  saleBox.style.display = "none";
+  uptadeId = null;
+  submit.innerHTML = "Qo‘shish";
 }
+
 function renderProducts() {
   if (cards.length === 0) {
     cardsListEL.innerHTML = `
-    <tr>
-      <td colspan="6" class="py-10">
-        <div class="flex flex-col items-center justify-center text-gray-500">
-          <i class="fa-solid fa-box-open text-5xl mb-3 text-gray-400"></i>
-          <h2 class="text-xl font-semibold mb-2">No products yet</h2>
-          <p class="mb-4">Start by adding your first product below</p>
-        </div>
-      </td>
-    </tr>
-  `;
+      <tr>
+        <td colspan="6" class="py-10">
+          <div class="flex flex-col items-center justify-center text-gray-500">
+            <i class="fa-solid fa-box-open text-5xl mb-3 text-gray-400"></i>
+            <h2 class="text-xl font-semibold mb-2">No products yet</h2>
+            <p class="mb-4">Start by adding your first product below</p>
+          </div>
+        </td>
+      </tr>
+    `;
     return;
   }
+
   savePruduct();
   cardsListEL.innerHTML = cards
     .map((card) => {
+      const finalPrice = card.price * (1 - card.sale);
       return `
-        
-          <tr class="even:bg-gray-50 hover:bg-gray-100 transition">
-              <td class="p-3">
-                <img
-                  class="w-12 h-12 object-cover rounded-md shadow"
-                  src="${card.url}"
-                  alt="${card.name}"
-                />
-              </td>
-              <td class="p-3 font-medium">${card.name}</td>
-              <td class="p-3 text-emerald-600 font-semibold">${
-                card.price * (1 - card.sale)
-              } so'm</td>
-              <td class="p-3">${card.count} ta</td>
-              <td class="p-3 text-center">
-  ${
-    card.isSale
-      ? `<button 
-           class="px-3 py-1 bg-rose-500 text-white rounded-md text-sm hover:bg-rose-600 transition">
-           ${card.sale * 100}%
-         </button>`
-      : `<button 
-           class="px-3 py-1 bg-gray-300 text-gray-600 rounded-md text-sm cursor-not-allowed">
-           —
-         </button>`
-  }
-</td>
-
-              <td class="p-3 space-x-2">
-                <button
-                  class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition cursor-pointer"
-                >
-                  <i class="fa-solid fa-pen"></i>
-                </button>
-              <button 
-  onclick="deleteBtn(${card.id})"
-  class="p-2 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition cursor-pointer"
-  >
-  <i class="fa-solid fa-trash"></i>
-  </button>
-
-              </td>
-            </tr>
-
-        `;
+        <tr class="even:bg-gray-50 hover:bg-gray-100 transition">
+          <td class="p-3">
+            <img
+              class="w-12 h-12 object-cover rounded-md shadow"
+              src="${card.url}"
+              alt="${card.name}"
+            />
+          </td>
+          <td class="p-3 font-medium">${card.name}</td>
+          <td class="p-3">
+            ${
+              card.isSale
+                ? `
+                  <span class="line-through text-gray-400 mr-2">${card.price} so'm</span>
+                  <span class="text-emerald-600 font-semibold">${finalPrice} so'm</span>
+                `
+                : `<span class="text-emerald-600 font-semibold">${card.price} so'm</span>`
+            }
+          </td>
+          <td class="p-3">${card.count} ta</td>
+          <td class="p-3 text-center">
+            ${
+              card.isSale
+                ? `<button 
+                     class="px-3 py-1 bg-rose-500 text-white rounded-md text-sm hover:bg-rose-600 transition">
+                     ${card.sale * 100}%
+                   </button>`
+                : `<button 
+                     class="px-3 py-1 bg-gray-300 text-gray-600 rounded-md text-sm cursor-not-allowed">
+                     —
+                   </button>`
+            }
+          </td>
+          <td class="p-3 space-x-2">
+            <button onclick="addToCart(${
+              card.id
+            })" class="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition cursor-pointer" title="Savatga qo'shish">
+              <i class="fas fa-cart-plus"></i>
+            </button>
+            <button onclick="editBtn(${
+              card.id
+            })" class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition cursor-pointer">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button onclick="deleteBtn(${
+              card.id
+            })" class="p-2 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition cursor-pointer">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `;
     })
     .join("");
 }
+
 
 function savePruduct() {
   localStorage.setItem("cards", JSON.stringify(cards));
 }
 
 function loadPruduct() {
-  cards = JSON.parse(localStorage.getItem("cards"));
+  cards = JSON.parse(localStorage.getItem("cards") || []);
 }
