@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Management</title>
+    <link rel="icon" type="image/png" href="./images.png" />
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link
       rel="stylesheet"
@@ -12,102 +14,260 @@
       referrerpolicy="no-referrer"
     />
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+      * {
+        font-family: "Inter", sans-serif;
+      }
+
       .gradient-bg {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .animate-fadeIn {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      .slide-in {
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      .input-focus {
+        transition: all 0.3s ease;
+      }
+
+      .input-focus:focus {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .btn-hover {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-hover::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .btn-hover:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      .pulse-dot {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .shimmer {
+        background: linear-gradient(
+          90deg,
+          #f0f0f0 25%,
+          #e0e0e0 50%,
+          #f0f0f0 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .badge-sale {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+
+      .table-row-hover {
+        transition: all 0.2s ease;
+      }
+
+      .table-row-hover:hover {
+        background: linear-gradient(
+          90deg,
+          rgba(102, 126, 234, 0.05) 0%,
+          rgba(118, 75, 162, 0.05) 100%
+        );
+        transform: scale(1.01);
+      }
+
+      .image-hover {
+        transition: all 0.3s ease;
+      }
+
+      .image-hover:hover {
+        transform: scale(1.1) rotate(3deg);
+      }
+
+      .floating {
+        animation: floating 3s ease-in-out infinite;
+      }
+
+      @keyframes floating {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
     </style>
   </head>
-  <body class="bg-gray-50 min-h-screen">
-    <header class="gradient-bg shadow-xl sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-6 py-5">
+  <body
+    class="bg-gradient-to-br from-gray-50 via-purple-50 to-blue-50 min-h-screen"
+  >
+    <header class="gradient-bg shadow-2xl sticky top-0 z-50 backdrop-blur-sm">
+      <div class="max-w-7xl mx-auto px-6 py-6">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-4">
             <div
-              class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg"
+              class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-2xl transform hover:rotate-6 transition-transform duration-300"
             >
-              <i class="fas fa-store text-purple-600 text-2xl"></i>
+              <i class="fas fa-store text-purple-600 text-3xl"></i>
             </div>
             <div>
-              <h1 class="text-2xl font-bold text-white">ShopManager</h1>
-              <p class="text-purple-200 text-sm">Product Dashboard</p>
+              <h1 class="text-3xl font-extrabold text-white tracking-tight">
+                ShopManager
+              </h1>
+              <p class="text-purple-200 text-sm font-medium mt-1">
+                <i class="fas fa-chart-line mr-1"></i>Product Dashboard
+              </p>
             </div>
           </div>
 
           <div class="relative">
             <button
               id="openModal"
-              class="relative bg-white/20 hover:bg-white/30 text-white p-3 rounded-xl transition"
+              class="relative glass-effect hover:bg-white/30 text-white p-4 rounded-2xl transition-all duration-300 hover:scale-110"
             >
               <i class="fas fa-shopping-cart text-2xl"></i>
               <span
-                id="openModal"
-                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
+                id="shop-btn"
+                class="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full w-7 h-7 flex items-center justify-center shadow-lg pulse-dot"
               >
                 0
               </span>
             </button>
-
-            <div
-              id="cartDropdown"
-              class="hidden absolute right-0 mt-4 w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 animate-fadeIn"
-            >
-              <div class="p-4 border-b border-gray-200 bg-purple-50">
-                <h3 class="text-lg font-bold text-gray-800">
-                  <i class="fas fa-shopping-bag text-purple-600 mr-2"></i>
-                  Shopping Cart
-                </h3>
-              </div>
-              <div id="cartItems" class="p-4 max-h-96 overflow-y-auto">
-                <div class="text-center text-gray-500 py-8">
-                  <i
-                    class="fas fa-shopping-basket text-5xl mb-3 text-gray-300"
-                  ></i>
-                  <p>Savat bo'sh</p>
-                </div>
-              </div>
-              <div class="p-4 border-t border-gray-200 bg-gray-50">
-                <div class="flex justify-between items-center mb-3">
-                  <span class="font-semibold text-gray-700">Jami:</span>
-                  <span
-                    id="cartTotal"
-                    class="text-2xl font-bold text-purple-600"
-                    >0 so'm</span
-                  >
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </header>
+
     <section
       id="overlay-modal"
-      class="fixed top-0 right-0 h-full w-[500px] bg-white border-l-2 border-[#667eea] shadow-2xl flex flex-col z-50 hidden"
+      class="fixed top-0 right-0 h-full w-[550px] bg-white border-l-4 border-purple-600 shadow-2xl flex flex-col z-50 hidden slide-in"
     >
-      <div class="flex items-center justify-between px-6 py-4 border-b">
-        <h1 class="text-xl font-bold text-gray-800">🛒 Shopping Cart</h1>
-        <button class="text-gray-500 hover:text-red-500">
+      <header
+        class="p-6 border-b gradient-bg flex items-center justify-between"
+      >
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+          <i class="fas fa-shopping-cart"></i>
+          Savat
+        </h2>
+        <button
+          class="text-white hover:bg-white/20 p-2 rounded-xl transition-all duration-300"
+        >
           <i id="closeModal" class="fa-solid fa-xmark text-2xl"></i>
         </button>
+      </header>
+
+      <div
+        class="flex-1 overflow-y-auto scrollbar-hide bg-gradient-to-b from-gray-50 to-white"
+      >
+        <table class="w-full text-sm">
+          <tbody id="cart-all"></tbody>
+        </table>
       </div>
 
-      <div class="flex-1 flex items-center justify-center p-10 text-gray-500">
-        <h1 class="text-lg">Savat bo‘sh</h1>
-      </div>
-
-      <div class="px-6 py-4 border-t">
-        <div
-          class="flex items-center justify-between text-lg font-semibold text-gray-800"
+      <footer
+        class="p-6 border-t-4 border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50 flex justify-between items-center"
+      >
+        <span id="cart-total" class="font-bold text-gray-800 text-xl"
+          >Jami: 0 so'm</span
         >
-          <span>Jami:</span>
-          <span>0 so'm</span>
-        </div>
         <button
-          class="w-full mt-4 py-3 bg-[#667eea] text-white rounded-lg hover:bg-[#5a67d8] transition"
+          class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:shadow-2xl font-semibold transition-all duration-300 hover:scale-105"
         >
-          Xarid qilish
+          <i class="fas fa-check-circle mr-2"></i>
+          Buyurtma berish
         </button>
-      </div>
+      </footer>
     </section>
 
     <div class="max-w-7xl mx-auto p-6 mt-8">
@@ -115,26 +275,29 @@
         <div class="lg:col-span-1">
           <form
             id="form"
-            class="bg-white p-6 rounded-2xl shadow-lg sticky top-32"
+            class="bg-white p-8 rounded-3xl shadow-2xl sticky top-32 card-hover border-2 border-purple-100"
           >
-            <h2
-              class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3"
-            >
+            <div class="flex items-center gap-4 mb-8">
               <div
-                class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center"
+                class="w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg floating"
               >
-                <i class="fas fa-plus text-white"></i>
+                <i class="fas fa-plus text-white text-xl"></i>
               </div>
-              Mahsulot qo'shish
-            </h2>
+              <h2 class="text-2xl font-extrabold text-gray-800">
+                Mahsulot qo'shish
+              </h2>
+            </div>
 
-            <div class="space-y-4">
+            <div class="space-y-5">
               <div>
-                <label class="text-sm font-semibold text-gray-700 mb-2 block">
-                  <i class="fas fa-tag mr-2 text-purple-600"></i>Nomi
+                <label
+                  class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2"
+                >
+                  <i class="fas fa-tag text-purple-600"></i>
+                  Nomi
                 </label>
                 <input
-                  class="w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none"
+                  class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none input-focus"
                   type="text"
                   id="name"
                   placeholder="Mahsulot nomi"
@@ -142,11 +305,14 @@
               </div>
 
               <div>
-                <label class="text-sm font-semibold text-gray-700 mb-2 block">
-                  <i class="fas fa-image mr-2 text-purple-600"></i>Rasm URL
+                <label
+                  class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2"
+                >
+                  <i class="fas fa-image text-purple-600"></i>
+                  Rasm URL
                 </label>
                 <input
-                  class="w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none"
+                  class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none input-focus"
                   type="url"
                   id="url"
                   placeholder="https://..."
@@ -154,12 +320,14 @@
               </div>
 
               <div>
-                <label class="text-sm font-semibold text-gray-700 mb-2 block">
-                  <i class="fas fa-money-bill-wave mr-2 text-purple-600"></i
-                  >Narxi
+                <label
+                  class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2"
+                >
+                  <i class="fas fa-money-bill-wave text-purple-600"></i>
+                  Narxi
                 </label>
                 <input
-                  class="w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none"
+                  class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none input-focus"
                   type="number"
                   id="price"
                   placeholder="0"
@@ -167,38 +335,46 @@
               </div>
 
               <div>
-                <label class="text-sm font-semibold text-gray-700 mb-2 block">
-                  <i class="fas fa-boxes mr-2 text-purple-600"></i>Soni
+                <label
+                  class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2"
+                >
+                  <i class="fas fa-boxes text-purple-600"></i>
+                  Soni
                 </label>
                 <input
-                  class="w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none"
+                  class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none input-focus"
                   type="number"
                   id="count"
                   placeholder="0"
                 />
               </div>
 
-              <div class="flex items-center gap-3 p-4 bg-purple-50 rounded-xl">
+              <div
+                class="flex items-center gap-3 p-5 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border-2 border-purple-100"
+              >
                 <input
-                  class="w-5 h-5 cursor-pointer accent-purple-600"
+                  class="w-6 h-6 cursor-pointer accent-purple-600"
                   type="checkbox"
                   id="isSale"
                 />
                 <label
-                  class="text-sm font-medium text-gray-700 cursor-pointer"
+                  class="text-sm font-semibold text-gray-700 cursor-pointer flex items-center gap-2"
                   for="isSale"
                 >
-                  <i class="fas fa-percentage mr-2 text-purple-600"></i>Chegirma
-                  bor
+                  <i class="fas fa-percentage text-purple-600"></i>
+                  Chegirma bor
                 </label>
               </div>
 
               <div class="saleBox hidden">
-                <label class="text-sm font-semibold text-gray-700 mb-2 block">
-                  <i class="fas fa-percent mr-2 text-red-600"></i>Chegirma %
+                <label
+                  class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2"
+                >
+                  <i class="fas fa-percent text-red-600"></i>
+                  Chegirma %
                 </label>
                 <input
-                  class="w-full p-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-red-400 focus:border-transparent outline-none"
+                  class="w-full p-4 border-2 border-red-200 rounded-xl focus:ring-2 focus:ring-red-400 focus:border-transparent outline-none input-focus"
                   type="number"
                   id="sale"
                   placeholder="0-99"
@@ -208,43 +384,48 @@
               <button
                 id="submit"
                 type="submit"
-                class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-4 rounded-xl hover:shadow-2xl transition font-semibold text-lg mt-6"
+                class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-5 rounded-xl hover:shadow-2xl transition-all duration-300 font-bold text-lg mt-6 btn-hover"
               >
-                <i class="fas fa-plus-circle mr-2"></i>Qo'shish
+                <i class="fas fa-plus-circle mr-2"></i>
+                Qo'shish
               </button>
             </div>
           </form>
         </div>
 
         <div class="lg:col-span-2">
-          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div class="p-6 border-b border-gray-200 gradient-bg">
-              <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+          <div
+            class="bg-white rounded-3xl shadow-2xl overflow-hidden card-hover border-2 border-purple-100"
+          >
+            <div class="p-8 border-b-4 border-purple-200 gradient-bg">
+              <h2
+                class="text-3xl font-extrabold text-white flex items-center gap-3"
+              >
                 <i class="fas fa-list"></i>
                 Mahsulotlar ro'yxati
               </h2>
             </div>
             <div class="overflow-x-auto">
               <table class="w-full">
-                <thead class="bg-gray-100">
+                <thead class="bg-gradient-to-r from-purple-100 to-indigo-100">
                   <tr>
-                    <th class="p-4 text-left font-semibold text-gray-700">
-                      Rasm
+                    <th class="p-5 text-left font-bold text-gray-700 text-sm">
+                      <i class="fas fa-image mr-2"></i>Rasm
                     </th>
-                    <th class="p-4 text-left font-semibold text-gray-700">
-                      Nomi
+                    <th class="p-5 text-left font-bold text-gray-700 text-sm">
+                      <i class="fas fa-tag mr-2"></i>Nomi
                     </th>
-                    <th class="p-4 text-left font-semibold text-gray-700">
-                      Narxi
+                    <th class="p-5 text-left font-bold text-gray-700 text-sm">
+                      <i class="fas fa-dollar-sign mr-2"></i>Narxi
                     </th>
-                    <th class="p-4 text-left font-semibold text-gray-700">
-                      Soni
+                    <th class="p-5 text-left font-bold text-gray-700 text-sm">
+                      <i class="fas fa-boxes mr-2"></i>Soni
                     </th>
-                    <th class="p-4 text-center font-semibold text-gray-700">
-                      Chegirma
+                    <th class="p-5 text-center font-bold text-gray-700 text-sm">
+                      <i class="fas fa-percent mr-2"></i>Chegirma
                     </th>
-                    <th class="p-4 text-center font-semibold text-gray-700">
-                      Harakatlar
+                    <th class="p-5 text-center font-bold text-gray-700 text-sm">
+                      <i class="fas fa-cog mr-2"></i>Harakatlar
                     </th>
                   </tr>
                 </thead>
